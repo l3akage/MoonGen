@@ -1,33 +1,5 @@
 local actors = {}
-local status, snmp = pcall(require, 'utils.snmp')
-if status then
-    table.insert(actors, snmp)
-else
-    print "unable to load snmp module"
-end
-
-local status, sshMikrotik = pcall(require, 'utils.ssh-mikrotik')
-if status then
-    table.insert(actors, sshMikrotik)
-else
-    print "unable to load mikrotik ssh module"
-end
-
-local status, sshFreeBSD = pcall(require, 'utils.ssh-freebsd')
-if status then                                                                  
-    table.insert(actors, sshFreeBSD)
-else
-    print "unable to load freeBSD ssh module"
-end
-
-local status, ssh = pcall(require, 'utils.ssh')
-if status then
-    table.insert(actors, ssh)
-else
-    print "unable to load linux ssh module"
-end
-
-local manual = require "utils.manual"
+local manual = require "rfc2544.utils.manual"
 table.insert(actors, manual)
 
 local mod = {}
@@ -178,7 +150,7 @@ function binarySearch:next(curr, top, threshold)
             self.lowerLimit = curr
         end
     else
-        if curr == lowerLimit then            
+        if curr == lowerLimit then
             return curr, true
         else
             self.upperLimit = curr
@@ -226,17 +198,4 @@ ffi.copy(macAddr, pkt.eth.dst.uint8, 6)
 macAddr[0] = (macAddr[0] + 1) % macWraparound
 --]]
 
-function mod.parseArguments(args)
-    local results = {}
-    for i=1, #args, 2 do
-        local key = args[i]:gsub("-", "", 2) -- cut off one or two leading minus
-        results[key] = args[i+1]
-    end
-    return results
-end
-
-
-
 return mod
-
-
