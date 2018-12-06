@@ -1,0 +1,12 @@
+--- libmoon/src/device.c.old	2018-12-06 10:38:40.101479417 +0100
++++ libmoon/src/device.c	2018-12-06 09:59:53.135677208 +0100
+@@ -119,7 +119,8 @@
+ 			.header_split = 0,
+ 			.hw_ip_checksum = !cfg->disable_offloads,
+ 			.hw_vlan_filter = 0,
+-			.jumbo_frame = 0,
++			.jumbo_frame = 1,
++			.max_rx_pkt_len= 9218,
+ 			.hw_strip_crc = 1,
+ 			.hw_vlan_strip = cfg->strip_vlan ? 1 : 0,
+ 		},
